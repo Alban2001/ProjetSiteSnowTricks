@@ -1,0 +1,34 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/************** ACCUEIL *****************/
+
+#liste-tricks-accueil {
+  margin: 30px;
+}
+
+.card-home-trick {
+  width: 325px;
+  height: 375px;
+}
+
+.img-trick-home {
+  width: 100px;
+  height: 300px;
+}
+
+@media screen and (min-width: 768px) {
+  /************* ACCUEIL ****************/
+
+  .img-trick-home {
+    width: 100px;
+    height: 250px;
+  }
+
+  .card-home-trick {
+    height: 325px;
+    width: 250px;
+  }
+}
