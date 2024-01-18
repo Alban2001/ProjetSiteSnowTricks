@@ -19,6 +19,45 @@ body {
   height: 300px;
 }
 
+/************* TRICk ****************/
+.div-img-video-trick {
+  overflow-x: auto;
+  height: 275px;
+}
+
+.div-img-video-trick img,
+.div-img-video-trick .div-video-trick {
+  width: 500px;
+  height: 250px;
+}
+
+.comment-trick > div:nth-child(2) {
+  width: 300px;
+}
+
+.div-comment-trick {
+  width: 100%;
+}
+
+#comment {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+#comment div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}
+
+#comment_Ajouter {
+  margin-top: 10px;
+  background-color: #343a40;
+  padding: 10px;
+  color: white;
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   /************* ACCUEIL ****************/
 
@@ -30,5 +69,20 @@ body {
   .card-home-trick {
     height: 325px;
     width: 250px;
+  }
+
+  /************* TRICk ****************/
+  form[name="comment"] {
+    display: flex;
+    justify-content: center;
+  }
+  #comment {
+    width: 500px;
+  }
+  .comment-trick > div:nth-child(2) {
+    width: auto;
+  }
+  .div-comment-trick {
+    width: 500px;
   }
 }
