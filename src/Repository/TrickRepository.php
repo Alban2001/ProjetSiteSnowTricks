@@ -34,6 +34,24 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOneBySlug(string $slug): ?Trick
+    {
+        return $this->createQueryBuilder('t')
+            //->select('t, i, c, uc')
+            ->select('t, i, u, v, c, g')
+            ->leftJoin('t.illustrations', 'i')
+            ->leftJoin('t.videos', 'v')
+            ->leftJoin('t.utilisateur', 'u')
+            ->leftJoin('t.commentaires', 'c')
+            ->leftJoin('t.groupe', 'g')
+            ->andWhere('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     //    /**
 //     * @return Trick[] Returns an array of Trick objects
 //     */

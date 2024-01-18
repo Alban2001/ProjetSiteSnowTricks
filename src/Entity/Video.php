@@ -14,7 +14,7 @@ class Video
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 250)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 5)]

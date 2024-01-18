@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Trick
+{% endblock %}
+
+{% block body %}
+    <div class="position-relative">
+        <img src="/images/upload/{{trick.illustrationPrincipale}}" class="w-100" alt="tail grab"/>
+        <div class="position-absolute top-0 end-0">
+            <a href="#" class="btn btn-primary">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a href="#" class="btn btn-primary">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        <button id="btnVoirMedias" class="btn btn-secondary d-block d-md-none" type="button">Voir les médias</button>
+    </div>
+    <div class="d-md-flex flex-column flex-md-row align-items-center mt-2 div-img-video-trick d-none">
+        {% for img in trick.illustrations %}
+            <div>
+                <img src="/images/upload/{{img.nom}}" alt="image"/>
+            </div>
+        {% endfor %}
+        {% for video in trick.videos %}
+            <div class="div-video-trick border d-flex align-items-center justify-content-center bg-secondary p-2">
+                <a class="text-white" href="{{video.nom}}">{{video.nom}}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="m-5">
+        {{trick.description}}
+    </div>
+    <div class="d-flex flex-column justify-content-center flex-md-row align-items-center m-5">
+        <p class="bg-dark bg-gradient text-white p-2 rounded me-3">Date de création :
+            {{trick.getDateCreation()|date("d/m/Y H:i")}}</p>
+        <p class="bg-dark bg-gradient text-white p-2 rounded me-3">Date de modification :
+            {{trick.getDateDerniereMAJ()|date("d/m/Y H:i")}}</p>
+        <p class="bg-dark bg-gradient text-white p-2 rounded me-3">Groupe :
+            {{trick.groupe.nom}}</p>
+        <p class="bg-dark bg-gradient text-white p-2 rounded me-3">Auteur :
+            {{trick.utilisateur.username}}</p>
+    </div>
+    <hr class="bg-dark opacity-100" style="height:5px;">
+    {{form(formComment)}}
+        <hr class="bg-dark opacity-100" style="height:5px;">
+        <div class="d-flex flex-column align-items-center">
+            {% for comment in trick.commentaires %}
+                <div class="d-flex mb-3 justify-content-center comment-trick">
+                    <div class="d-flex flex-column justify-content-center me-3">
+                        <i class="fa-solid fa-user border border-3 border-dark rounded-circle text-center fs-1"></i>
+                        <div class="d-flex align-items-center">{{comment.utilisateur.username}}</div>
+                    </div>
+                    <div>{{comment.getDateCreation()|date("d/m/Y H:i")}}<br>
+                        <div class="border border-dark border-3 p-2 div-comment-trick">{{comment.contenu}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if trick.commentaires.count() >= 10 %}
+                <button class="btn btn-secondary">Voir plus</button>
+            {% endif %}
+            <br>
+        </div>
+        <script src="/scripts/trick.js"></script>
+    {% endblock %}
