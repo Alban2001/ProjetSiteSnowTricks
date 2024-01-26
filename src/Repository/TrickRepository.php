@@ -34,7 +34,7 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findOneBySlug(string $slug): ?Trick
+    public function findOneBySlug(string $slug, int $page): ?Trick
     {
         return $this->createQueryBuilder('t')
             //->select('t, i, c, uc')
@@ -47,6 +47,8 @@ class TrickRepository extends ServiceEntityRepository
             ->andWhere('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->orderBy('t.id', 'ASC')
+            ->setFirstResult(0)
+            ->setMaxResults(5 * $page)
             ->getQuery()
             ->getOneOrNullResult()
         ;
