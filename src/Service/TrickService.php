@@ -23,12 +23,12 @@ class TrickService implements TrickServiceInterface
 
         return $tricks;
     }
-    public function findOneBySlug(string $slug): ?Trick
+    public function findOneBySlug(string $slug, int $page): ?Trick
     {
         $repository = $this->entityManager->getRepository(Trick::class);
 
         // Selection et affichage des détails complets d'un trick
-        $trick = $repository->findOneBySlug($slug);
+        $trick = $repository->findOneBySlug($slug, $page);
         $trick->setIllustrationPrincipale();
 
         return $trick;

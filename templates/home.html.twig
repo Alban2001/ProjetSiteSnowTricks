@@ -47,7 +47,7 @@
                 <img src="images/upload/{{trick.illustrationPrincipale}}" class="card-img-top img-trick-home" alt="tail grab">
                 <div class="card-body d-flex justify-content-between">
                     <h5 class="card-title">
-                        <a href="{{ path('trick_display', {slug: trick.getSlug}) }}">{{trick.getNom()}}</a>
+                        <a href="{{ path('trick_display', {slug: trick.getSlug, page: 1}) }}">{{trick.getNom()}}</a>
                     </h5>
                     <a href="#" class="btn btn-primary">
                         <i class="fa-solid fa-pen"></i>
