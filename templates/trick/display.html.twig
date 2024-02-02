@@ -60,7 +60,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% if trick.commentaires.count() >= 5 %}
+            {% if trick.commentaires.count() != countComments %}
                 <a href="{{ path('trick_display', {slug: trick.getSlug, page: page + 1}) }}" class="btn btn-secondary">Voir plus</a>
             {% endif %}
             <br>

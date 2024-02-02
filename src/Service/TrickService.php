@@ -33,4 +33,13 @@ class TrickService implements TrickServiceInterface
 
         return $trick;
     }
+    public function countCommentsTrick(string $slug): int
+    {
+        $repository = $this->entityManager->getRepository(Trick::class);
+
+        // Selection et affichage des détails complets d'un trick
+        $count = $repository->countCommentsTrick($slug);
+
+        return $count;
+    }
 }

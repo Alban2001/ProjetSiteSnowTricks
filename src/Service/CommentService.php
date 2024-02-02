@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Commentaire;
 use App\Entity\Trick;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CommentService implements CommentServiceInterface
@@ -13,11 +14,11 @@ class CommentService implements CommentServiceInterface
     }
 
     //Création d'un commentaire pour un trick précis
-    public function add(Commentaire $comment, Trick $trick)
+    public function add(Commentaire $comment, Trick $trick, Utilisateur $user)
     {
         $comment->setDateCreation(new \DateTime('now'));
         $comment->setTrick($trick);
-        $comment->setUtilisateur($trick->getUtilisateur());
+        $comment->setUtilisateur($user);
 
         $this->entityManager->persist($comment);
         $this->entityManager->flush();

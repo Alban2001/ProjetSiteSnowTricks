@@ -22,17 +22,18 @@ class TrickController extends AbstractController
     {
     }
 
-    #[Route(path: "/display/{slug}/{page}", name: "trick_display", methods: ["GET", "POST"])]
+    #[Route(path: "/display/{slug}?page={page}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
     public function display(#[MapEntity(expr: 'repository.findOneBySlug(slug, page)')] Trick $trick, Request $request, $page): Response
     {
         $trick->setIllustrationPrincipale();
         $comment = new Commentaire();
+        $countComments = $this->trickService->countCommentsTrick($trick->getSlug());
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->commentService->add($comment, $trick);
-
+            $user = $trick->getUtilisateur(); //@ToDo : $this->getUser();
+            $this->commentService->add($comment, $trick, $user);
             return $this->redirectToRoute('trick_display', [
                 "slug" => $trick->getSlug(),
                 'page' => $page
@@ -43,7 +44,8 @@ class TrickController extends AbstractController
         return $this->render("trick/display.html.twig", [
             'trick' => $trick,
             'formComment' => $form,
-            'page' => $page
+            'page' => $page,
+            'countComments' => $countComments
         ]);
     }
 

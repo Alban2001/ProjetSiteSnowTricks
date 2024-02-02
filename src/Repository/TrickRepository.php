@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @extends ServiceEntityRepository<Trick>
@@ -36,6 +37,13 @@ class TrickRepository extends ServiceEntityRepository
 
     public function findOneBySlug(string $slug, int $page): ?Trick
     {
+        // $totalComments = 20; // résultat requête : nombre commentaires par trick
+
+        $firstResult = 0;
+        $totalResults = 5 * $page;
+        // if ($totalResults > $totalComments) {
+        //     throw new NotFoundHttpException();
+        // }
         return $this->createQueryBuilder('t')
             //->select('t, i, c, uc')
             ->select('t, i, u, v, c, g')
@@ -47,10 +55,22 @@ class TrickRepository extends ServiceEntityRepository
             ->andWhere('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->orderBy('t.id', 'ASC')
-            ->setFirstResult(0)
-            ->setMaxResults(5 * $page)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($totalResults)
             ->getQuery()
             ->getOneOrNullResult()
+        ;
+    }
+
+    public function countCommentsTrick(string $slug): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('count(c.id)')
+            ->leftJoin('t.commentaires', 'c')
+            ->andWhere('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleScalarResult();
         ;
     }
 
