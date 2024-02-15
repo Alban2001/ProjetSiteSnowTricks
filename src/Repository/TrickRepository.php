@@ -35,17 +35,15 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findOneBySlug(string $slug, int $page): ?Trick
+    public function findOneBySlug(string $slug, int $page = 1): ?Trick
     {
         // $totalComments = 20; // résultat requête : nombre commentaires par trick
-
         $firstResult = 0;
         $totalResults = 5 * $page;
         // if ($totalResults > $totalComments) {
         //     throw new NotFoundHttpException();
         // }
         return $this->createQueryBuilder('t')
-            //->select('t, i, c, uc')
             ->select('t, i, u, v, c, g')
             ->leftJoin('t.illustrations', 'i')
             ->leftJoin('t.videos', 'v')
@@ -70,7 +68,7 @@ class TrickRepository extends ServiceEntityRepository
             ->andWhere('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult()
         ;
     }
 

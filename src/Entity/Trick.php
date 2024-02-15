@@ -56,13 +56,13 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Groupe $groupe = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Commentaire::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Commentaire::class, cascade: ["persist", "remove"])]
     private Collection $commentaires;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Illustration::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Illustration::class, cascade: ["persist", "remove"])]
     private Collection $illustrations;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ["persist", "remove"])]
     private Collection $videos;
 
     public function __construct()

@@ -23,6 +23,7 @@ class TrickService implements TrickServiceInterface
 
         return $tricks;
     }
+
     public function findOneBySlug(string $slug, int $page): ?Trick
     {
         $repository = $this->entityManager->getRepository(Trick::class);
@@ -33,13 +34,18 @@ class TrickService implements TrickServiceInterface
 
         return $trick;
     }
+
     public function countCommentsTrick(string $slug): int
     {
         $repository = $this->entityManager->getRepository(Trick::class);
 
         // Selection et affichage des détails complets d'un trick
-        $count = $repository->countCommentsTrick($slug);
+        return $repository->countCommentsTrick($slug);
+    }
 
-        return $count;
+    public function delete(Trick $trick)
+    {
+        $this->entityManager->remove($trick);
+        $this->entityManager->flush();
     }
 }
