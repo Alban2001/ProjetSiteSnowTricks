@@ -21,7 +21,28 @@ class CommentaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentaire::class);
     }
 
-//    /**
+    public function displayAllCommentsBySlug(string $slug, int $page = 1): array
+    {
+        // $totalComments = 20; // résultat requête : nombre commentaires par trick
+        $firstResult = 0;
+        $totalResults = 5 * $page;
+        // if ($totalResults > $totalComments) {
+        //     throw new NotFoundHttpException();
+        // }
+        return $this->createQueryBuilder('c')
+            ->select('c, u')
+            ->join('c.trick', 't')
+            ->leftJoin('c.utilisateur', 'u')
+            ->andWhere('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($totalResults)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    //    /**
 //     * @return Commentaire[] Returns an array of Commentaire objects
 //     */
 //    public function findByExampleField($value): array
@@ -36,7 +57,7 @@ class CommentaireRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Commentaire
+    //    public function findOneBySomeField($value): ?Commentaire
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

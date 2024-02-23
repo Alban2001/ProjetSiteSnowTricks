@@ -32,6 +32,8 @@ class TrickController extends AbstractController
         $trick->setIllustrationPrincipale();
         $comment = new Commentaire();
         $countComments = $this->trickService->countCommentsTrick($trick->getSlug());
+        $countCommentsBySlug = $this->commentService->countCommentsBySlug($trick->getSlug(), $page);
+        $comments = $this->commentService->displayAllCommentsBySlug($trick->getSlug(), $page);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -50,7 +52,9 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'formComment' => $form,
             'page' => $page,
-            'countComments' => $countComments
+            'countComments' => $countComments,
+            'countCommentsBySlug' => $countCommentsBySlug,
+            'comments' => $comments,
         ]);
     }
 

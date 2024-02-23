@@ -46,6 +46,7 @@ class TrickService implements TrickServiceInterface
     public function delete(Trick $trick)
     {
         $this->entityManager->remove($trick);
+
         $this->entityManager->flush();
     }
 }

@@ -49,7 +49,7 @@
     {{form(formComment)}}
         <hr class="bg-dark opacity-100" style="height:5px;">
         <div class="d-flex flex-column align-items-center">
-            {% for comment in trick.commentaires %}
+            {% for comment in comments %}
                 <div class="d-flex mb-3 justify-content-center comment-trick">
                     <div class="d-flex flex-column justify-content-center me-3">
                         <i class="fa-solid fa-user border border-3 border-dark rounded-circle text-center fs-1"></i>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% if trick.commentaires.count() != countComments %}
+            {% if countCommentsBySlug != countComments %}
                 <a href="{{ path('trick_display', {slug: trick.getSlug, page: page + 1}) }}" class="btn btn-secondary">Voir plus</a>
             {% endif %}
             <br>

@@ -37,24 +37,14 @@ class TrickRepository extends ServiceEntityRepository
 
     public function findOneBySlug(string $slug, int $page = 1): ?Trick
     {
-        // $totalComments = 20; // résultat requête : nombre commentaires par trick
-        $firstResult = 0;
-        $totalResults = 5 * $page;
-        // if ($totalResults > $totalComments) {
-        //     throw new NotFoundHttpException();
-        // }
         return $this->createQueryBuilder('t')
-            ->select('t, i, u, v, c, g')
-            ->leftJoin('t.illustrations', 'i')
-            ->leftJoin('t.videos', 'v')
+            ->select('t, i, u, v, g')
+            ->join('t.illustrations', 'i')
+            ->join('t.videos', 'v')
             ->leftJoin('t.utilisateur', 'u')
-            ->leftJoin('t.commentaires', 'c')
             ->leftJoin('t.groupe', 'g')
             ->andWhere('t.slug = :slug')
             ->setParameter('slug', $slug)
-            ->orderBy('t.id', 'ASC')
-            ->setFirstResult($firstResult)
-            ->setMaxResults($totalResults)
             ->getQuery()
             ->getOneOrNullResult()
         ;
