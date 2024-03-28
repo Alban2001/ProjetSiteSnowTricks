@@ -21,11 +21,11 @@ class CommentaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentaire::class);
     }
 
-    public function displayAllCommentsBySlug(string $slug, int $page = 1): array
+    public function displayAllCommentsBySlug(string $slug, int $page = 1, int $number = 5): array
     {
         // $totalComments = 20; // résultat requête : nombre commentaires par trick
         $firstResult = 0;
-        $totalResults = 5 * $page;
+        $totalResults = $number * $page;
         // if ($totalResults > $totalComments) {
         //     throw new NotFoundHttpException();
         // }

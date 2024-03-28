@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Trick
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}{{ form_row(form.description) }}
+    {{ form_row(form.imagePrincipale) }}
+    {% for illustration in form.illustrations %}
+        {{ form_row(illustration.nom) }}
+    {% endfor %}
+    {{ form_row(form.videoPrincipale) }}
+    {% for video in form.videos %}
+        {{ form_row(video.nom) }}
+    {% endfor %}
+    {{ form_row(form.groupe) }}{{ form_end(form) }}
+{% endblock %}

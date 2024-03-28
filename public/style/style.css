@@ -39,13 +39,15 @@ body {
   width: 100%;
 }
 
-#comment {
+#comment,
+#trick {
   display: flex;
   flex-direction: column;
   margin: 10px;
 }
 
-#comment div:nth-child(1) {
+#comment div:nth-child(1),
+#trick div {
   display: flex;
   flex-direction: column;
 }
@@ -72,11 +74,20 @@ body {
   }
 
   /************* TRICk ****************/
-  form[name="comment"] {
+  form[name="comment"],
+  form[name="trick"] {
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
-  #comment {
+
+  form[name="trick"] > div {
+    align-self: center;
+    margin-top: 15px;
+  }
+
+  #comment,
+  #trick {
     width: 500px;
   }
   .comment-trick > div:nth-child(2) {
