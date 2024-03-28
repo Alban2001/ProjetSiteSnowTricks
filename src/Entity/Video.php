@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VideoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -15,6 +16,7 @@ class Video
     private ?int $id = null;
 
     #[ORM\Column(length: 250)]
+    #[Assert\NotBlank(message: "Vous devez mettre le lien d'une vidéo !")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 5)]

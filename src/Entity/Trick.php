@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity('slug')]
+#[UniqueEntity(
+    fields: ['nom'],
+    message: 'Désolé, mais ce nom existe déja !')]
 class Trick
 {
     #[ORM\Id]
@@ -19,7 +22,10 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le nom du trick ne peut pas être vide !")]
     private ?string $nom = null;
+    #[Assert\NotBlank(message: "Vous devez choisir une image principale")]
+    private ?string $imagePrincipale = null;
     private ?string $illustrationPrincipale = null;
 
     public function setIllustrationPrincipale(): static
@@ -33,12 +39,16 @@ class Trick
 
         return $this;
     }
+
     public function getIllustrationPrincipale(): ?string
     {
         return $this->illustrationPrincipale;
     }
 
+    #[Assert\NotBlank(message: "Vous devez choisir une vidéo principale")]
+    private ?string $videoPrincipale = null;
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description ne peut pas être vide !")]
     private ?string $description = null;
 
     #[ORM\Column(length: 50, type: 'string', unique: true)]
@@ -137,6 +147,28 @@ class Trick
         return $this;
     }
 
+    public function setVideoPrincipale(string $videoPrincipale): static
+    {
+        $this->videoPrincipale = $videoPrincipale;
+
+        return $this;
+    }
+    public function getVideoPrincipale(): ?string
+    {
+        return $this->videoPrincipale;
+    }
+
+
+    public function setImagePrincipale(string $imagePrincipale): static
+    {
+        $this->imagePrincipale = $imagePrincipale;
+
+        return $this;
+    }
+    public function getImagePrincipale(): ?string
+    {
+        return $this->imagePrincipale;
+    }
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
