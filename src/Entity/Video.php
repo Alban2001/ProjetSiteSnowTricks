@@ -19,7 +19,7 @@ class Video
     #[Assert\NotBlank(message: "Vous devez mettre le lien d'une vidéo !")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 25)]
     private ?string $type = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -34,21 +34,15 @@ class Video
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
     }
-
-    public function getType(): ?string
+    public function getNom(): ?string
     {
-        return $this->type;
+        return $this->nom;
     }
 
     public function setType(string $type): static
@@ -57,28 +51,28 @@ class Video
 
         return $this;
     }
-
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getType(): ?string
     {
-        return $this->date_creation;
+        return $this->type;
     }
-
     public function setDateCreation(\DateTimeInterface $date_creation): static
     {
         $this->date_creation = $date_creation;
 
         return $this;
     }
-
-    public function getTrick(): ?Trick
+    public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->trick;
+        return $this->date_creation;
     }
-
     public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
 
         return $this;
+    }
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
     }
 }

@@ -21,14 +21,12 @@ class CommentaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentaire::class);
     }
 
+    // Affichage de tous les commentaires pour un trick (5 commentaires par trick)
     public function displayAllCommentsBySlug(string $slug, int $page = 1, int $number = 5): array
     {
-        // $totalComments = 20; // résultat requête : nombre commentaires par trick
-        $firstResult = 0;
-        $totalResults = $number * $page;
-        // if ($totalResults > $totalComments) {
-        //     throw new NotFoundHttpException();
-        // }
+        $firstResult = 0;   // Premier résultat
+        $totalResults = $number * $page;    // Dernier résultat pour la page concernée
+
         return $this->createQueryBuilder('c')
             ->select('c, u')
             ->join('c.trick', 't')
@@ -41,29 +39,4 @@ class CommentaireRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    //    /**
-//     * @return Commentaire[] Returns an array of Commentaire objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-    //    public function findOneBySomeField($value): ?Commentaire
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

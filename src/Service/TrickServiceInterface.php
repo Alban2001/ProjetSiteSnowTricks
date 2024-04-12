@@ -8,7 +8,7 @@ interface TrickServiceInterface
 {
     public function findAll();
     public function findOneBySlug(string $slug, int $page);
-    public function countCommentsTrick(string $slug);
     public function delete(Trick $trick);
     public function create(Trick $trick);
+    public function update(Trick $trick);
 }

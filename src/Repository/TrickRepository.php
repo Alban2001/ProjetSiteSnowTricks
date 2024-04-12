@@ -21,13 +21,13 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
+
+    // Affichage de tous les tricks
     public function findAll(): array
     {
         return $this->createQueryBuilder('t')
-            //->select('t, i, c, uc')
             ->select('t, i, u')
             ->join('t.illustrations', 'i')
-            // ->join('t.commentaires', 'c')
             ->leftJoin('t.utilisateur', 'u')
             ->orderBy('t.id', 'ASC')
             ->getQuery()
@@ -35,6 +35,7 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
 
+    // Affichage de l'ensemble des informations d'un trick (=en fonction du slug)
     public function findOneBySlug(string $slug, int $page = 1): ?Trick
     {
         return $this->createQueryBuilder('t')
@@ -50,6 +51,7 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
 
+    // Affichage du nombre de commentaires total pour un trick
     public function countCommentsTrick(string $slug): int
     {
         return $this->createQueryBuilder('t')
@@ -61,29 +63,4 @@ class TrickRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
-
-    //    /**
-//     * @return Trick[] Returns an array of Trick objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-    //    public function findOneBySomeField($value): ?Trick
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

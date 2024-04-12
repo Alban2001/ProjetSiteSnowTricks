@@ -13,17 +13,15 @@ class CommentService implements CommentServiceInterface
     {
     }
 
+    // Selection et affichage de tous les commentaires pour un trick
     public function displayAllCommentsBySlug(string $slug, int $page, int $number)
     {
         $repository = $this->entityManager->getRepository(Commentaire::class);
 
-        // Selection et affichage de tous les commentaires
-        $comments = $repository->displayAllCommentsBySlug($slug, $page, $number);
-
-        return $comments;
+        return $repository->displayAllCommentsBySlug($slug, $page, $number);
     }
 
-    //Création d'un commentaire pour un trick précis
+    // Création d'un commentaire pour un trick
     public function add(Commentaire $comment, Trick $trick, Utilisateur $user)
     {
         $comment->setDateCreation(new \DateTime('now'));
@@ -34,11 +32,11 @@ class CommentService implements CommentServiceInterface
         $this->entityManager->flush();
     }
 
+    // Récupération du nombre de commentaires pour un trick
     public function countCommentsBySlug(string $slug, int $page): int
     {
         $repository = $this->entityManager->getRepository(Commentaire::class);
 
-        // Selection et affichage des détails complets d'un trick
         return count($repository->displayAllCommentsBySlug($slug, $page));
     }
 }

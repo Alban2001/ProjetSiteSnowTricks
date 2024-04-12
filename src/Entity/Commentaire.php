@@ -29,14 +29,10 @@ class Commentaire
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
     private ?Utilisateur $utilisateur = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getContenu(): ?string
-    {
-        return $this->contenu;
     }
 
     public function setContenu(string $contenu): static
@@ -45,10 +41,9 @@ class Commentaire
 
         return $this;
     }
-
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getContenu(): ?string
     {
-        return $this->date_creation;
+        return $this->contenu;
     }
 
     public function setDateCreation(\DateTimeInterface $date_creation): static
@@ -57,10 +52,9 @@ class Commentaire
 
         return $this;
     }
-
-    public function getTrick(): ?Trick
+    public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->trick;
+        return $this->date_creation;
     }
 
     public function setTrick(?Trick $trick): static
@@ -69,10 +63,9 @@ class Commentaire
 
         return $this;
     }
-
-    public function getUtilisateur(): ?Utilisateur
+    public function getTrick(): ?Trick
     {
-        return $this->utilisateur;
+        return $this->trick;
     }
 
     public function setUtilisateur(?Utilisateur $utilisateur): static
@@ -81,4 +74,9 @@ class Commentaire
 
         return $this;
     }
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
 }

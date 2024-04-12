@@ -44,12 +44,12 @@
     <div id="liste-tricks-accueil" class="position-relative">
         {% for trick in tricks %}
             <div class="card card-home-trick">
-                <img src="images/upload/{{trick.illustrationPrincipale}}" class="card-img-top img-trick-home" alt="tail grab">
+                <img src="images/upload/{{trick.illustrationPrincipale.nom}}" class="card-img-top img-trick-home" alt="tail grab">
                 <div class="card-body d-flex justify-content-between">
                     <h5 class="card-title">
                         <a class="nomTrick" href="{{ path('trick_display', {slug: trick.slug, page: 1}) }}">{{trick.nom}}</a>
                     </h5>
-                    <a href="#" class="btn btn-primary">
+                    <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-primary">
                         <i class="fa-solid fa-pen"></i>
                     </a>
                     <a class="btn btn-primary btnDeleteTrick" data-bs-toggle="modal" data-bs-target="#modalDeleteTrick_{{trick.id}}">

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class IllustrationType extends AbstractType
 {
+    // Création d'un formulaire pour l'ajout d'une illustration
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

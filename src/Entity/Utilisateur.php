@@ -48,21 +48,15 @@ class Utilisateur
         return $this->id;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
     public function setUsername(string $username): static
     {
         $this->username = $username;
 
         return $this;
     }
-
-    public function getEmailAddress(): ?string
+    public function getUsername(): ?string
     {
-        return $this->email_address;
+        return $this->username;
     }
 
     public function setEmailAddress(string $email_address): static
@@ -71,10 +65,9 @@ class Utilisateur
 
         return $this;
     }
-
-    public function getPassword(): ?string
+    public function getEmailAddress(): ?string
     {
-        return $this->password;
+        return $this->email_address;
     }
 
     public function setPassword(string $password): static
@@ -83,10 +76,9 @@ class Utilisateur
 
         return $this;
     }
-
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getPassword(): ?string
     {
-        return $this->date_creation;
+        return $this->password;
     }
 
     public function setDateCreation(\DateTimeInterface $date_creation): static
@@ -95,10 +87,9 @@ class Utilisateur
 
         return $this;
     }
-
-    public function getValid(): ?int
+    public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->valid;
+        return $this->date_creation;
     }
 
     public function setValid(int $valid): static
@@ -106,6 +97,10 @@ class Utilisateur
         $this->valid = $valid;
 
         return $this;
+    }
+    public function getValid(): ?int
+    {
+        return $this->valid;
     }
 
     /**
