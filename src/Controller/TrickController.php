@@ -8,6 +8,7 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Form\TrickUpdateType;
 use App\Service\TrickServiceInterface;
 use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Path;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,21 +26,19 @@ class TrickController extends AbstractController
     {
     }
 
+    // Affichage du trick avec ses informations en détails
     #[Route(path: "/display/{slug}?page={page}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
     public function display(#[MapEntity(expr: 'repository.findOneBySlug(slug, page)')] Trick $trick, Request $request, $page): Response
     {
-        $number = 5;
-        $trick->setIllustrationPrincipale();
         $comment = new Commentaire();
-        //$countComments = $this->trickService->countCommentsTrick($trick->getSlug());
-        //$countComments = count($trick->getCommentaires());
-        //$countCommentsBySlug = $this->commentService->countCommentsBySlug($trick->getSlug(), $page);
-        // $countCommentsBySlug = $this->commentService->countCommentsBySlug($trick->getSlug(), $page);
-
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
+        // Traitement des commentaires pour un trick
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $trick->getUtilisateur(); //@ToDo : $this->getUser();
+
+            // Ajout d'un commentaire pour un trick
             $this->commentService->add($comment, $trick, $user);
 
             return $this->redirectToRoute('trick_display', [
@@ -53,26 +47,21 @@ class TrickController extends AbstractController
             ]);
         }
 
-        // Selection et affichage du trick
-        //$comments = $this->commentService->displayAllCommentsBySlug($trick->getSlug(), $page);
+        // Nombre de commentaires par page
+        $number = 5;
+        $trick->setIllustrationPrincipale();
+
         return $this->render("trick/display.html.twig", [
             'trick' => $trick,
             'formComment' => $form,
             'page' => $page,
             'number' => $number,
-            // 'countComments' => $countComments,
-            // 'countCommentsBySlug' => $countCommentsBySlug,
+            // Affichage de tout les commentaires d'un trick
             'comments' => $this->commentService->displayAllCommentsBySlug($trick->getSlug(), $page, $number),
         ]);
     }
 
-    #[Route(path: "/delete/{slug}", name: "trick_delete", methods: ["GET"])]
-    public function delete(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick): Response
-    {
-        $this->trickService->delete($trick);
-
-        return $this->redirectToRoute('home');
-    }
+    // Création d'un trick
     #[Route(path: "/create", name: "trick_create", methods: ["GET", "POST"])]
     public function create(ValidatorInterface $validator, Request $request): Response
     {
@@ -85,24 +74,50 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-        $errors = $validator->validate($trick);
-        if ($form->isSubmitted()) {
-            if (count($errors) > 0) {
-                return $this->render('trick/create.html.twig', [
-                    'form' => $form,
-                    'errors' => $errors,
-                ]);
-            } else {
-                if ($form->isValid()) {
-                    $this->trickService->create($trick);
 
-                    return $this->redirectToRoute('home');
-                }
-            }
+        // Traitement de la création d'un nouveau trick
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Ajout d'un trick
+            $this->trickService->create($trick);
+
+            return $this->redirectToRoute('home');
         }
-        // Selection et affichage de tous les tricks
+
         return $this->render("trick/create.html.twig", [
             'form' => $form
         ]);
     }
+
+    // Mise à jour du trick
+    #[Route(path: "/update/{slug}", name: "trick_update", methods: ["GET", "POST"])]
+    public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request): Response
+    {
+        $form = $this->createForm(TrickType::class, $trick, ['update' => true, 'submitLabel' => 'Mettre à jour']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Mise à jour d'un trick
+            $this->trickService->update($trick, $request);
+
+            return $this->redirectToRoute('trick_update', [
+                "slug" => $trick->getSlug()
+            ]);
+        }
+
+        $trick->setIllustrationPrincipale();
+        return $this->render("trick/update.html.twig", [
+            'trick' => $trick,
+            'form' => $form
+        ]);
+    }
+
+    // Suppression du trick
+    #[Route(path: "/delete/{slug}", name: "trick_delete", methods: ["GET"])]
+    public function delete(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick): Response
+    {
+        // Suppresion d'un trick
+        $this->trickService->delete($trick);
+
+        return $this->redirectToRoute('home');
+    }
+
 }

@@ -12,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    // Création automatique et instantané de 5 tricks
     public function load(ObjectManager $manager)
     {
         // Ajout d'un utilisateur
@@ -30,7 +31,7 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        // Ajout de 10 tricks
+        // Ajout de 5 tricks
         for ($i = 1; $i <= 5; $i++) {
             $trick = new Trick();
             $trick->setNom("trick_" . $i);
@@ -58,8 +59,8 @@ class AppFixtures extends Fixture
             // Ajout de 3 vidéos
             for ($j = 1; $j <= 3; $j++) {
                 $video = new Video();
-                $video->setNom("https://www.youtube.com/watch?v=vQ9k2cf7xJE");
-                $video->setType("MP4");
+                $video->setNom("https://www.youtube.com/embed/vQ9k2cf7xJE");
+                $video->setType("YouTube");
                 $video->setDateCreation(new \DateTime('now'));
                 $video->setTrick($trick);
                 $manager->persist($video);

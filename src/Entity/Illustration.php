@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\IllustrationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IllustrationRepository::class)]
 class Illustration
@@ -25,14 +24,10 @@ class Illustration
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $trick = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
     }
 
     public function setNom(string $nom): static
@@ -41,10 +36,9 @@ class Illustration
 
         return $this;
     }
-
-    public function getPrincipale(): ?int
+    public function getNom(): ?string
     {
-        return $this->principale;
+        return $this->nom;
     }
 
     public function setPrincipale(int $principale): static
@@ -53,10 +47,9 @@ class Illustration
 
         return $this;
     }
-
-    public function getTrick(): ?Trick
+    public function getPrincipale(): ?int
     {
-        return $this->trick;
+        return $this->principale;
     }
 
     public function setTrick(?Trick $trick): static
@@ -64,5 +57,9 @@ class Illustration
         $this->trick = $trick;
 
         return $this;
+    }
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
     }
 }

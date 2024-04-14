@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[UniqueEntity(
-    fields: ['nom'],
+    fields: ['slug'],
     message: 'Désolé, mais ce nom existe déja !')]
 class Trick
 {
@@ -24,29 +24,15 @@ class Trick
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le nom du trick ne peut pas être vide !")]
     private ?string $nom = null;
-    #[Assert\NotBlank(message: "Vous devez choisir une image principale")]
+
+    #[Assert\NotBlank(message: "Vous devez choisir une image principale", groups: ["Update"])]
     private ?string $imagePrincipale = null;
-    private ?string $illustrationPrincipale = null;
 
-    public function setIllustrationPrincipale(): static
-    {
-        foreach ($this->illustrations as $illustration) {
-            if (1 === $illustration->getPrincipale()) {
-                $this->illustrationPrincipale = $illustration->getNom();
-                break;
-            }
-        }
+    private ?Illustration $illustrationPrincipale = null;
 
-        return $this;
-    }
-
-    public function getIllustrationPrincipale(): ?string
-    {
-        return $this->illustrationPrincipale;
-    }
-
-    #[Assert\NotBlank(message: "Vous devez choisir une vidéo principale")]
+    #[Assert\NotBlank(message: "Vous devez choisir une vidéo principale", groups: ["Update"])]
     private ?string $videoPrincipale = null;
+
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "La description ne peut pas être vide !")]
     private ?string $description = null;
@@ -87,21 +73,33 @@ class Trick
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
     }
-
-    public function getDescription(): ?string
+    public function getNom(): ?string
     {
-        return $this->description;
+        return $this->nom;
+    }
+
+    // Récupération de l'illustration principale
+    public function setIllustrationPrincipale(): static
+    {
+        foreach ($this->illustrations as $illustration) {
+            if (1 === $illustration->getPrincipale()) {
+                $this->illustrationPrincipale = $illustration;
+                break;
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIllustrationPrincipale(): ?Illustration
+    {
+        return $this->illustrationPrincipale;
     }
 
     public function setDescription(string $description): static
@@ -111,9 +109,9 @@ class Trick
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getDescription(): ?string
     {
-        return $this->slug;
+        return $this->description;
     }
 
     public function setSlug(string $slug): static
@@ -122,10 +120,9 @@ class Trick
 
         return $this;
     }
-
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getSlug(): ?string
     {
-        return $this->date_creation;
+        return $this->slug;
     }
 
     public function setDateCreation(\DateTimeInterface $date_creation): static
@@ -135,9 +132,9 @@ class Trick
         return $this;
     }
 
-    public function getDateDerniereMAJ(): ?\DateTimeInterface
+    public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->date_derniere_MAJ;
+        return $this->date_creation;
     }
 
     public function setDateDerniereMAJ(\DateTimeInterface $date_derniere_MAJ): static
@@ -146,6 +143,10 @@ class Trick
 
         return $this;
     }
+    public function getDateDerniereMAJ(): ?\DateTimeInterface
+    {
+        return $this->date_derniere_MAJ;
+    }
 
     public function setVideoPrincipale(string $videoPrincipale): static
     {
@@ -153,11 +154,11 @@ class Trick
 
         return $this;
     }
+
     public function getVideoPrincipale(): ?string
     {
         return $this->videoPrincipale;
     }
-
 
     public function setImagePrincipale(string $imagePrincipale): static
     {
@@ -165,13 +166,10 @@ class Trick
 
         return $this;
     }
+
     public function getImagePrincipale(): ?string
     {
         return $this->imagePrincipale;
-    }
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
     }
 
     public function setUtilisateur(?Utilisateur $utilisateur): static
@@ -179,6 +177,11 @@ class Trick
         $this->utilisateur = $utilisateur;
 
         return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
     }
 
     public function getGroupe(): ?Groupe
@@ -282,5 +285,4 @@ class Trick
 
         return $this;
     }
-
 }

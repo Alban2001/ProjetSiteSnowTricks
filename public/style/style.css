@@ -22,12 +22,12 @@ body {
 /************* TRICk ****************/
 .div-img-video-trick {
   overflow-x: auto;
-  height: 275px;
+  height: 380px;
 }
 
 .div-img-video-trick img,
 .div-img-video-trick .div-video-trick {
-  width: 500px;
+  width: 450px;
   height: 250px;
 }
 
@@ -58,6 +58,16 @@ body {
   padding: 10px;
   color: white;
   width: 100%;
+}
+
+.div_form_illustrations_update,
+.div_form_videos_update {
+  display: none;
+}
+
+.form_illustrations_update,
+.form_videos_update {
+  width: 425px;
 }
 
 @media screen and (min-width: 768px) {

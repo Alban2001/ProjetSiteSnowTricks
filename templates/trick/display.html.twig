@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="position-relative">
-        <img src="/images/upload/{{trick.illustrationPrincipale}}" class="w-100" alt="tail grab"/>
+        <img src="/images/upload/{{trick.illustrationPrincipale.nom}}" class="w-100" alt="tail grab"/>
         <div class="position-absolute top-0 end-0">
             <a href="#" class="btn btn-primary">
                 <i class="fa-solid fa-pen"></i>
@@ -21,14 +21,14 @@
     </div>
     <div class="d-md-flex flex-column flex-md-row align-items-center mt-2 div-img-video-trick d-none">
         {% for img in trick.illustrations %}
-            <div>
-                <img src="/images/upload/{{img.nom}}" alt="image"/>
-            </div>
+            {% if img.principale == "0" %}
+                <div>
+                    <img src="/images/upload/{{img.nom}}" alt="image"/>
+                </div>
+            {% endif %}
         {% endfor %}
         {% for video in trick.videos %}
-            <div class="div-video-trick border d-flex align-items-center justify-content-center bg-secondary p-2">
-                <a class="text-white" href="{{video.nom}}">{{video.nom}}</a>
-            </div>
+            <iframe width="560" height="315" src="{{video.nom}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         {% endfor %}
     </div>
     <br>

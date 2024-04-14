@@ -31,16 +31,15 @@ class Groupe
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
+    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
     }
 
     /**

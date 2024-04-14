@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Groupe;
-use App\Entity\Illustration;
 use App\Entity\Trick;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -11,15 +10,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\File;
 
 class TrickType extends AbstractType
 {
+    // Création d'un formulaire pour l'ajout d'un trick
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,19 +30,28 @@ class TrickType extends AbstractType
                     'label' => 'Nom du trick'
                 ]
             )
+            ->add(
+                'slug',
+                HiddenType::class,
+                [
+                    'error_bubbling' => false
+                ]
+            )
             ->add('description')
             ->add(
                 'imagePrincipale',
                 FileType::class,
                 [
-                    'label' => 'Image principale'
+                    'label' => 'Image principale',
+                    'required' => !$options['update']
                 ]
             )
             ->add(
                 'videoPrincipale',
                 TextType::class,
                 [
-                    'label' => 'Vidéo principale'
+                    'label' => 'Vidéo principale',
+                    'required' => !$options['update']
                 ]
             )
             ->add(
@@ -51,7 +60,10 @@ class TrickType extends AbstractType
                 [
                     'entry_type' => IllustrationType::class,
                     'allow_add' => true,
-                    'entry_options' => ['label' => false]
+                    'entry_options' => [
+                        'label' => false,
+                        'mapped' => !$options['update']
+                    ]
                 ]
             )
             ->add(
@@ -71,7 +83,7 @@ class TrickType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ])
-            ->add('Ajouter', SubmitType::class)
+            ->add('Ajouter', SubmitType::class, ['label' => $options['submitLabel']])
         ;
     }
 
@@ -79,6 +91,17 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'update' => false,
+            'submitLabel' => 'Ajouter',
+            'validation_groups' => function (FormInterface $form) {
+                $data = $form->getData();
+
+                if ($data->getImagePrincipale() == '' && $form->getConfig()->getOption('update')) {
+                    return ['Default'];
+                }
+
+                return ['Default', 'Update'];
+            },
         ]);
     }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommentType extends AbstractType
 {
+    // Création d'un formulaire pour l'ajout d'un commentaire
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
