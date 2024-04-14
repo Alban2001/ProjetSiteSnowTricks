@@ -60,7 +60,10 @@ class TrickType extends AbstractType
                 [
                     'entry_type' => IllustrationType::class,
                     'allow_add' => true,
-                    'entry_options' => ['label' => false]
+                    'entry_options' => [
+                        'label' => false,
+                        'mapped' => !$options['update']
+                    ]
                 ]
             )
             ->add(
@@ -93,7 +96,7 @@ class TrickType extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
 
-                if ($data->getImagePrincipale() == '' && $data->getVideoPrincipale() == '' && $form->getConfig()->getOption('update')) {
+                if ($data->getImagePrincipale() == '' && $form->getConfig()->getOption('update')) {
                     return ['Default'];
                 }
 

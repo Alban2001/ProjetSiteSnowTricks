@@ -41,9 +41,9 @@
         </a>
     </div>
     {% set i = 0 %}
-    <div id="liste-tricks-accueil" class="position-relative">
+    <div id="liste-tricks-accueil" class="position-relative d-flex flex-column flex-md-row flex-md-wrap">
         {% for trick in tricks %}
-            <div class="card card-home-trick">
+            <div class="card card-home-trick m-md-3 mb-3">
                 <img src="images/upload/{{trick.illustrationPrincipale.nom}}" class="card-img-top img-trick-home" alt="tail grab">
                 <div class="card-body d-flex justify-content-between">
                     <h5 class="card-title">
@@ -82,7 +82,6 @@
             </button>
         {% endif %}
         <a class="btn btn-secondary position-absolute bottom-0 end-0" href="{{ path('trick_create') }}">
-
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>

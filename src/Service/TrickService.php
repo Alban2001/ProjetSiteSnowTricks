@@ -9,6 +9,7 @@ use App\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 class TrickService implements TrickServiceInterface
 {
@@ -127,11 +128,33 @@ class TrickService implements TrickServiceInterface
     }
 
     // Mise à jour du trick
-    public function update(Trick $trick)
+    public function update(Trick $trick, Request $request)
     {
         // Mise à jour dans la BDD
         $trick->setDateDerniereMAJ(new \DateTime('now'));
         $trick->setGroupe($trick->getGroupe());
+
+        // Récupération des images physiques (file)
+        $illustrations = $request->files->get("trick")["illustrations"];
+
+        if ($illustrations !== null) {
+            // Mise à jour des photos
+            for ($i = 0; $i <= count($illustrations) - 1; $i++) {
+                // Si les objets illustration sont remplis
+                if ($illustrations[$i]["nom"] !== null) {
+                    $imagePhysique = TrickService::generateImage($illustrations[$i]["nom"]);
+                    $trick->getIllustrations()[$i]->setNom($imagePhysique);
+                }
+            }
+        }
+
+        // Mise à jour des vidéos
+        for ($k = 0; $k <= $trick->getVideos()->count() - 1; $k++) {
+            // Si les objets video sont remplis
+            if ($trick->getVideos()[$k]->getNom() !== null) {
+                $trick->getVideos()[$k]->setNom(str_replace("watch?v=", "embed/", $trick->getVideos()[$k]->getNom()));
+            }
+        }
 
         $this->entityManager->persist($trick);
         $this->entityManager->flush();

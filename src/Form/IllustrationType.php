@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Illustration;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
@@ -35,6 +36,16 @@ class IllustrationType extends AbstractType
                 )
             )
         ;
+        $builder->get('nom')->addModelTransformer(
+            new CallbackTransformer(
+                function ($nom) {
+                    return null;
+                },
+                function ($nom) {
+                    return $nom;
+                }
+            )
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

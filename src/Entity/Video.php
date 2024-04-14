@@ -16,7 +16,6 @@ class Video
     private ?int $id = null;
 
     #[ORM\Column(length: 250)]
-    #[Assert\NotBlank(message: "Vous devez mettre le lien d'une vidéo !")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 25)]

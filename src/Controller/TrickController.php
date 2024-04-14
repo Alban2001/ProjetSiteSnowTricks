@@ -90,13 +90,13 @@ class TrickController extends AbstractController
 
     // Mise à jour du trick
     #[Route(path: "/update/{slug}", name: "trick_update", methods: ["GET", "POST"])]
-    public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request, ValidatorInterface $validator): Response
+    public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request): Response
     {
         $form = $this->createForm(TrickType::class, $trick, ['update' => true, 'submitLabel' => 'Mettre à jour']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //Mise à jour d'un trick
-            $this->trickService->update($trick);
+            $this->trickService->update($trick, $request);
 
             return $this->redirectToRoute('trick_update', [
                 "slug" => $trick->getSlug()
