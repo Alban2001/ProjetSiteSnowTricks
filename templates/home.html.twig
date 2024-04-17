@@ -49,31 +49,35 @@
                     <h5 class="card-title">
                         <a class="nomTrick" href="{{ path('trick_display', {slug: trick.slug, page: 1}) }}">{{trick.nom}}</a>
                     </h5>
-                    <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-primary">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                    <a class="btn btn-primary btnDeleteTrick" data-bs-toggle="modal" data-bs-target="#modalDeleteTrick_{{trick.id}}">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
+                    {% if app.user %}
+                        <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-primary">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a class="btn btn-primary btnDeleteTrick" data-bs-toggle="modal" data-bs-target="#modalDeleteTrick_{{trick.id}}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
-            <div class="modal fade" tabindex="-1" id="modalDeleteTrick_{{trick.id}}">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Supression d'un trick</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Etes-vous sûr de vouloir supprimer le trick "<span id="pDeleteTrick_{{trick.id}}">{{trick.nom}}</span>" ?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <a class="btn btn-primary" href="{{ path('trick_delete', {slug: trick.slug}) }}">Supprimer</a>
+            {% if app.user %}
+                <div class="modal fade" tabindex="-1" id="modalDeleteTrick_{{trick.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Supression d'un trick</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Etes-vous sûr de vouloir supprimer le trick "<span id="pDeleteTrick_{{trick.id}}">{{trick.nom}}</span>" ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <a class="btn btn-primary" href="{{ path('trick_delete', {slug: trick.slug}) }}">Supprimer</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
             {% set i = i + 1 %}
         {% endfor %}
         {% if i >= 15 %}
@@ -81,9 +85,11 @@
                 <i class="fa-solid fa-up-long fs-5"></i>
             </button>
         {% endif %}
-        <a class="btn btn-secondary position-absolute bottom-0 end-0" href="{{ path('trick_create') }}">
-            <i class="fa-solid fa-plus"></i>
-        </a>
+        {% if app.user %}
+            <a class="btn btn-secondary position-absolute bottom-0 end-0" href="{{ path('trick_create') }}">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        {% endif %}
     </div>
     <script src="/scripts/home_page.js"></script>
 {% endblock %}

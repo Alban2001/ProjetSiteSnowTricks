@@ -7,14 +7,6 @@
 {% block body %}
     <div class="position-relative">
         <img src="/images/upload/{{trick.illustrationPrincipale.nom}}" class="w-100" alt="tail grab"/>
-        <div class="position-absolute top-0 end-0">
-            <a href="#" class="btn btn-primary">
-                <i class="fa-solid fa-pen"></i>
-            </a>
-            <a href="#" class="btn btn-primary">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-        </div>
     </div>
     <div class="d-flex justify-content-center mt-5">
         <button id="btnVoirMedias" class="btn btn-secondary d-block d-md-none" type="button">Voir les médias</button>
@@ -47,7 +39,11 @@
         </p>
     </div>
     <hr class="bg-dark opacity-100" style="height:5px;">
-    {{form(formComment)}}
+    {% if app.user %}
+        {{ form(formComment) }}
+            {% else %}
+                <a class="d-flex justify-content-center" href="{{ path('app_login') }}">Se connecter pour ajouter un commentaire !</a>
+        {% endif %}
         <hr class="bg-dark opacity-100" style="height:5px;">
         <div class="d-flex flex-column align-items-center">
             {% for comment in comments %}
