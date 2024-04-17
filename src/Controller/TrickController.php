@@ -36,7 +36,7 @@ class TrickController extends AbstractController
 
         // Traitement des commentaires pour un trick
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $trick->getUtilisateur(); //@ToDo : $this->getUser();
+            $user = $this->getUser();
 
             // Ajout d'un commentaire pour un trick
             $this->commentService->add($comment, $trick, $user);
@@ -77,8 +77,9 @@ class TrickController extends AbstractController
 
         // Traitement de la création d'un nouveau trick
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
             // Ajout d'un trick
-            $this->trickService->create($trick);
+            $this->trickService->create($trick, $user);
 
             return $this->redirectToRoute('home');
         }
@@ -95,8 +96,9 @@ class TrickController extends AbstractController
         $form = $this->createForm(TrickType::class, $trick, ['update' => true, 'submitLabel' => 'Mettre à jour']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
             //Mise à jour d'un trick
-            $this->trickService->update($trick, $request);
+            $this->trickService->update($trick, $request, $user);
 
             return $this->redirectToRoute('trick_update', [
                 "slug" => $trick->getSlug()

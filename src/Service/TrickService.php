@@ -71,7 +71,7 @@ class TrickService implements TrickServiceInterface
     }
 
     // Création d'un trick
-    public function create(Trick $trick)
+    public function create(Trick $trick, Utilisateur $user)
     {
         // Ajout du trick dans la BDD
         $trick->setDateCreation(new \DateTime('now'));
@@ -79,7 +79,7 @@ class TrickService implements TrickServiceInterface
         // Définition du slug
         $trick->setSlug(str_replace(" ", "-", strtolower($trick->getNom())));
         $trick->setGroupe($trick->getGroupe());
-        $trick->setUtilisateur(null);   //TO DO : ajouter l'ID utilisateur
+        $trick->setUtilisateur($user);   //TO DO : ajouter l'ID utilisateur
 
         // Création des illustrations
 
@@ -128,11 +128,12 @@ class TrickService implements TrickServiceInterface
     }
 
     // Mise à jour du trick
-    public function update(Trick $trick, Request $request)
+    public function update(Trick $trick, Request $request, Utilisateur $user)
     {
         // Mise à jour dans la BDD
         $trick->setDateDerniereMAJ(new \DateTime('now'));
         $trick->setGroupe($trick->getGroupe());
+        $trick->setUtilisateur($user);
 
         // Récupération des images physiques (file)
         $illustrations = $request->files->get("trick")["illustrations"];

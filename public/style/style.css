@@ -88,6 +88,9 @@ body {
   form[name="trick"] {
     display: flex;
     justify-content: center;
+  }
+
+  form[name="trick"] {
     flex-direction: column;
   }
 
