@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
         $user->setEmailAddress("alban.voiriot@gmail.com");
         $user->setPassword('$2y$10$mdJ47k4Myp2cbQFmHYJteuABxkl6WWkpDoSGNCKwRO/InQC3SX8ZG');
         $user->setDateCreation(new \DateTime('now'));
-        $user->setValid(1);
+        $user->setVerified(true);
         $manager->persist($user);
 
         // Ajout d'un groupe

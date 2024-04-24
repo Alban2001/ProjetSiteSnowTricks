@@ -37,15 +37,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_creation = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $valid = null;
-
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Trick::class)]
     private Collection $tricks;
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commentaire::class)]
     private Collection $commentaires;
     private ?array $roles = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -100,17 +100,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->date_creation;
-    }
-
-    public function setValid(int $valid): static
-    {
-        $this->valid = $valid;
-
-        return $this;
-    }
-    public function getValid(): ?int
-    {
-        return $this->valid;
     }
 
     public function getUserIdentifier(): string
@@ -199,6 +188,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $commentaire->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
