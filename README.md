@@ -16,7 +16,7 @@
 - [Contexte](#contexte)
 - [Installation](#installation)
   - [Télécharger le projet](#télécharger-le-projet)
-  - [Configurer le fichier .env](#configurer-le-fichier-.env)
+  - [Configurer le fichier .env](#configurer-le-fichier-env)
   - [Dossier upload](#dossier-upload)
 - [Guide d'utilisation](#guide-dutilisation)
   - [Compte utilisateur](#compte-utilisateur)
