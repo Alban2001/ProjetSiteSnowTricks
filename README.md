@@ -11,7 +11,7 @@
 - **Version de MySQL** : 5.7.11
 - **Version de Bootstrap** : 5.0.2
 
-# Sommaire
+## Sommaire
 
 - [Contexte](#contexte)
 - [Installation](#installation)
@@ -21,11 +21,11 @@
 - [Guide d'utilisation](#guide-dutilisation)
   - [Compte utilisateur](#compte-utilisateur)
 
-# Contexte
+## Contexte
 
 Ce projet a été conçu dans le cadre de ma formation de développeur d'applications PHP/Symfony (OpenClassrooms) sur la création d'un site communautaire afin que les utilsaiteurs puissent partager et communiquer leur passion pour le snowboard. Ils pourront créer leur compte afin qu'ils puissent ajouter leur trick avec des vidéos, images, une description et mettre des commentaires dans ceux des autres.
 
-# Installation
+## Installation
 
 ### Télécharger le projet
 
@@ -34,19 +34,21 @@ Ce projet a été conçu dans le cadre de ma formation de développeur d'applica
 ### Configurer le fichier .env
 
 - => Remplissez la variable **_DATABASE_URL_** afin de permettre au projet de communiquer avec la base de données.
-Exemple : 
+  Exemple :
+
 ```
 DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 ```
+
 Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simplement lancer la commande dans le terminal de Symfony : `php bin/console doctrine:migrations:migrate`. Des insertions automatique de 5 tricks seront déjà présentes grâce aux fixtures afin d'avoir une base sur le site.
 
 - => Veuillez aussi compléter la variable **_MAILER_DSN_** qui concerne l'envoi de mail pour la création de compte et réinitialisation de mot de passe
 
 ### Dossier upload
 
-Veuillez créer un dossier **_/upload_** dans le dossier **_/public/images/_**. Celui-ci va vous permettre de stocker les images de vos tricks lors des ajouts et des modifications. Des tricks ont déjà ajouté automatiquement depuis les fixtures (**_App\DataFixtures\AppFixtures_**) mais vous rendre compte que les images physiques n'existent pas. 
+Veuillez créer un dossier **_/upload_** dans le dossier **_/public/images/_**. Celui-ci va vous permettre de stocker les images de vos tricks lors des ajouts et des modifications. Des tricks ont déjà ajouté automatiquement depuis les fixtures (**_App\DataFixtures\AppFixtures_**) mais vous rendre compte que les images physiques n'existent pas.
 
-# Guide d'utilisation
+## Guide d'utilisation
 
 ### Compte utilisateur
 
