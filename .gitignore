@@ -20,5 +20,3 @@
 ###< symfony/phpunit-bridge ###
 
 /public/images/upload/
-
-/migrations/
