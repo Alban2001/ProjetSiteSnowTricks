@@ -83,7 +83,7 @@ class TrickType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ])
-            ->add('Ajouter', SubmitType::class, ['label' => $options['submitLabel']])
+            ->add('Ajouter', SubmitType::class, ['label' => $options['submitLabel'], 'attr' => ['class' => 'btn btn-primary mb-5 w-100']])
         ;
     }
 

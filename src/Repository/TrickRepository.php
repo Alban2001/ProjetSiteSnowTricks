@@ -36,7 +36,7 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // Affichage de l'ensemble des informations d'un trick (=en fonction du slug)
-    public function findOneBySlug(string $slug, int $page = 1): ?Trick
+    public function findOneBySlug(string $slug): ?Trick
     {
         return $this->createQueryBuilder('t')
             ->select('t, i, u, v, g')

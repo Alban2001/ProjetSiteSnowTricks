@@ -31,9 +31,9 @@ class TrickService implements TrickServiceInterface
     }
 
     // Récupération du trick en fonction de son slug avec toutes ses informations
-    public function findOneBySlug(string $slug, int $page): ?Trick
+    public function findOneBySlug(string $slug): ?Trick
     {
-        $trick = $this->entityManager->getRepository(Trick::class)->findOneBySlug($slug, $page);
+        $trick = $this->entityManager->getRepository(Trick::class)->findOneBySlug($slug);
 
         // Affectation de l'image principale
         $trick->setIllustrationPrincipale();

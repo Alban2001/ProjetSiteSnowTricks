@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface TrickServiceInterface
 {
     public function findAll();
-    public function findOneBySlug(string $slug, int $page);
+    public function findOneBySlug(string $slug);
     public function delete(Trick $trick);
     public function create(Trick $trick, Utilisateur $user);
     public function update(Trick $trick, Request $request, Utilisateur $user);

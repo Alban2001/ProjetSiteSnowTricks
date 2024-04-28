@@ -52,21 +52,13 @@ body {
   flex-direction: column;
 }
 
-#comment_Ajouter {
-  margin-top: 10px;
-  background-color: #343a40;
-  padding: 10px;
-  color: white;
-  width: 100%;
-}
-
-.div_form_illustrations_update,
-.div_form_videos_update {
+.div-form-illustrations-update,
+.div-form-videos-update {
   display: none;
 }
 
-.form_illustrations_update,
-.form_videos_update {
+.form-illustrations-update,
+.form-videos-update {
   width: 425px;
 }
 
@@ -103,9 +95,11 @@ body {
   #trick {
     width: 500px;
   }
+
   .comment-trick > div:nth-child(2) {
     width: auto;
   }
+
   .div-comment-trick {
     width: 500px;
   }

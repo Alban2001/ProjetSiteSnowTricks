@@ -14,7 +14,7 @@ const edit_form_illustration = document.querySelectorAll(
 
 edit_form_illustration.forEach((element, index) => {
   element.onclick = () => {
-    document.querySelectorAll(".div_form_illustrations_update")[
+    document.querySelectorAll(".div-form-illustrations-update")[
       index
     ].style.display = "block";
   };
@@ -26,7 +26,7 @@ const edit_form_video = document.querySelectorAll(".edit_form_video");
 edit_form_video.forEach((element, index) => {
   console.log(index);
   element.onclick = () => {
-    document.querySelectorAll(".div_form_videos_update")[index].style.display =
+    document.querySelectorAll(".div-form-videos-update")[index].style.display =
       "block";
   };
 });

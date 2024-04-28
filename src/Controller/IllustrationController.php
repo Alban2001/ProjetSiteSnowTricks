@@ -20,6 +20,8 @@ class IllustrationController extends AbstractController
     #[Route('/delete/{id}', name: 'delete_illustration', requirements: ['id' => '\d+'], methods: ["GET", "POST"])]
     public function delete(#[MapEntity(expr: 'repository.find(id)')] Illustration $illustration): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         // Suppression de l'illustration
         $this->illustrationService->delete($illustration);
 

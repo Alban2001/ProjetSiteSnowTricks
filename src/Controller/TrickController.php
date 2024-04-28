@@ -28,7 +28,7 @@ class TrickController extends AbstractController
 
     // Affichage du trick avec ses informations en détails
     #[Route(path: "/display/{slug}?page={page}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
-    public function display(#[MapEntity(expr: 'repository.findOneBySlug(slug, page)')] Trick $trick, Request $request, $page): Response
+    public function display(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request, $page): Response
     {
         $comment = new Commentaire();
         $form = $this->createForm(CommentType::class, $comment);
@@ -63,8 +63,10 @@ class TrickController extends AbstractController
 
     // Création d'un trick
     #[Route(path: "/create", name: "trick_create", methods: ["GET", "POST"])]
-    public function create(ValidatorInterface $validator, Request $request): Response
+    public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $trick = new Trick();
         $number = 3;
         for ($i = 0; $i < $number; $i++) {
@@ -93,6 +95,8 @@ class TrickController extends AbstractController
     #[Route(path: "/update/{slug}", name: "trick_update", methods: ["GET", "POST"])]
     public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(TrickType::class, $trick, ['update' => true, 'submitLabel' => 'Mettre à jour']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -116,6 +120,7 @@ class TrickController extends AbstractController
     #[Route(path: "/delete/{slug}", name: "trick_delete", methods: ["GET"])]
     public function delete(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         // Suppresion d'un trick
         $this->trickService->delete($trick);
 
