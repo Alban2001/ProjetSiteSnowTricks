@@ -30,50 +30,107 @@ class Commentaire
     private ?Utilisateur $utilisateur = null;
 
 
+    /**
+     * Method getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Method setContenu
+     *
+     * @param string $contenu
+     *
+     * @return static
+     */
     public function setContenu(string $contenu): static
     {
         $this->contenu = $contenu;
 
         return $this;
     }
+
+    /**
+     * Method getContenu
+     *
+     * @return string
+     */
     public function getContenu(): ?string
     {
         return $this->contenu;
     }
 
+    /**
+     * Method setDateCreation
+     *
+     * @param \DateTimeInterface $date_creation
+     *
+     * @return static
+     */
     public function setDateCreation(\DateTimeInterface $date_creation): static
     {
         $this->date_creation = $date_creation;
 
         return $this;
     }
+
+    /**
+     * Method getDateCreation
+     *
+     * @return \DateTimeInterface
+     */
     public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->date_creation;
     }
 
+    /**
+     * Method setTrick
+     *
+     * @param ?Trick $trick
+     *
+     * @return static
+     */
     public function setTrick(?Trick $trick): static
     {
         $this->trick = $trick;
 
         return $this;
     }
+
+    /**
+     * Method getTrick
+     *
+     * @return Trick
+     */
     public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
+    /**
+     * Method setUtilisateur
+     *
+     * @param ?Utilisateur $utilisateur
+     *
+     * @return static
+     */
     public function setUtilisateur(?Utilisateur $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
 
         return $this;
     }
+
+    /**
+     * Method getUtilisateur
+     *
+     * @return Utilisateur
+     */
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;

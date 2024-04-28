@@ -27,11 +27,21 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
         $this->initialize($expiresAt, $selector, $hashedToken);
     }
 
+    /**
+     * Method getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Method getUser
+     *
+     * @return object
+     */
     public function getUser(): object
     {
         return $this->user;

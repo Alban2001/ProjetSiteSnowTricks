@@ -16,8 +16,14 @@ class VideoController extends AbstractController
     {
     }
 
-    //Suppresion d'une vidéo pour la mise à jour d'un trick
     #[Route('/delete/{id}', name: 'delete_video', requirements: ['id' => '\d+'], methods: ["GET", "POST"])]
+    /**
+     * Suppresion d'une vidéo pour la mise à jour d'un trick
+     *
+     * @param #[MapEntity(expr: $video [explicite description]
+     *
+     * @return Response
+     */
     public function delete(#[MapEntity(expr: 'repository.find(id)')] Video $video): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');

@@ -9,8 +9,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    // Page de connexion
     #[Route(path: '/login', name: 'app_login')]
+    /**
+     * Page de connexion
+     *
+     * @param AuthenticationUtils $authenticationUtils [explicite description]
+     *
+     * @return Response
+     */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // Récupère les erreurs login s'il y en a
@@ -23,8 +29,11 @@ class LoginController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
-
-    // Page de déconnexion
+    /**
+     * Page de déconnexion
+     *
+     * @return Response
+     */
     public function logout(): Response
     {
         return $this->render('security/login.html.twig');

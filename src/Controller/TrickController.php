@@ -28,6 +28,15 @@ class TrickController extends AbstractController
 
     // Affichage du trick avec ses informations en détails
     #[Route(path: "/display/{slug}?page={page}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
+    /**
+     * Création d'un trick
+     *
+     * @param Trick $trick
+     * @param Request $request
+     * @param $page
+     *
+     * @return Response
+     */
     public function display(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request, $page): Response
     {
         $comment = new Commentaire();
@@ -61,8 +70,14 @@ class TrickController extends AbstractController
         ]);
     }
 
-    // Création d'un trick
     #[Route(path: "/create", name: "trick_create", methods: ["GET", "POST"])]
+    /**
+     * Création d'un trick
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -91,8 +106,15 @@ class TrickController extends AbstractController
         ]);
     }
 
-    // Mise à jour du trick
     #[Route(path: "/update/{slug}", name: "trick_update", methods: ["GET", "POST"])]
+    /**
+     * Mise à jour du trick
+     *
+     * @param Trick $trick
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -116,8 +138,14 @@ class TrickController extends AbstractController
         ]);
     }
 
-    // Suppression du trick
     #[Route(path: "/delete/{slug}", name: "trick_delete", methods: ["GET"])]
+    /**
+     * Suppression du trick
+     *
+     * @param #[MapEntity(expr: $trick
+     *
+     * @return Response
+     */
     public function delete(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');

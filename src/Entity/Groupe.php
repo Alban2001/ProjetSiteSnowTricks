@@ -26,17 +26,35 @@ class Groupe
         $this->tricks = new ArrayCollection();
     }
 
+    /**
+     * Method getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Method setNom
+     *
+     * @param string $nom [explicite description]
+     *
+     * @return static
+     */
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
     }
+
+    /**
+     * Method getNom
+     *
+     * @return string
+     */
     public function getNom(): ?string
     {
         return $this->nom;
@@ -50,6 +68,13 @@ class Groupe
         return $this->tricks;
     }
 
+    /**
+     * Method addTrick
+     *
+     * @param Trick $trick [explicite description]
+     *
+     * @return static
+     */
     public function addTrick(Trick $trick): static
     {
         if (!$this->tricks->contains($trick)) {
@@ -60,6 +85,13 @@ class Groupe
         return $this;
     }
 
+    /**
+     * Method removeTrick
+     *
+     * @param Trick $trick [explicite description]
+     *
+     * @return static
+     */
     public function removeTrick(Trick $trick): static
     {
         if ($this->tricks->removeElement($trick)) {
