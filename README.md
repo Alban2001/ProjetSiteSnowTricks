@@ -48,6 +48,8 @@ Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simpleme
 
 Veuillez créer un dossier **_/upload_** dans le dossier **_/public/images/_**. Celui-ci va vous permettre de stocker les images de vos tricks lors des ajouts et des modifications. Des tricks ont déjà ajouté automatiquement depuis les fixtures (**_App\DataFixtures\AppFixtures_**) mais vous rendre compte que les images physiques n'existent pas.
 
+- Lancer la commande dans le terminale de Symfony : `php bin/console doctrine:fixtures:load`
+
 ## Guide d'utilisation
 
 ### Compte utilisateur
