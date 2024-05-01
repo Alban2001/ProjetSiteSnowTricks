@@ -40,7 +40,7 @@ Ce projet a été conçu dans le cadre de ma formation de développeur d'applica
 DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 ```
 
-Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simplement lancer la commande dans le terminal de Symfony : `php bin/console doctrine:migrations:migrate`. Des insertions automatique de 5 tricks seront déjà présentes grâce aux fixtures afin d'avoir une base sur le site.
+Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simplement lancer la commande dans le terminal de Symfony : `php bin/console doctrine:migrations:migrate`.
 
 - => Veuillez aussi compléter la variable **_MAILER_DSN_** qui concerne l'envoi de mail pour la création de compte et réinitialisation de mot de passe
 
@@ -48,6 +48,7 @@ Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simpleme
 
 Veuillez créer un dossier **_/upload_** dans le dossier **_/public/images/_**. Celui-ci va vous permettre de stocker les images de vos tricks lors des ajouts et des modifications. Des tricks ont déjà ajouté automatiquement depuis les fixtures (**_App\DataFixtures\AppFixtures_**) mais vous rendre compte que les images physiques n'existent pas.
 
+ Des insertions automatique de 10 tricks seront présentes grâce aux fixtures afin d'avoir une base sur le site.
 - Lancer la commande dans le terminale de Symfony : `php bin/console doctrine:fixtures:load`
 
 ## Guide d'utilisation
