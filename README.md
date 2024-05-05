@@ -31,6 +31,8 @@ Ce projet a été conçu dans le cadre de ma formation de développeur d'applica
 
 => Pour télécharger le dossier, veuillez effectuer la commande GIT : `git clone https://github.com/Alban2001/ProjetSiteSnowTricks.git`
 
+=> Dans le terminal de Symfony, effectuer les commandes : `cd ProjetSiteSnowTricks` puis `composer install` afin de pouvoir installer les fichiers manquants de composer et mettre à jour. Un message d'erreur va apparaître, car dans le fichier .env, il manque la variable **_DATABASE_URL_**.
+
 ### Configurer le fichier .env
 
 - => Remplissez la variable **_DATABASE_URL_** afin de permettre au projet de communiquer avec la base de données.
@@ -40,13 +42,13 @@ Ce projet a été conçu dans le cadre de ma formation de développeur d'applica
 DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 ```
 
-Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simplement lancer la commande dans le terminal de Symfony : `php bin/console doctrine:migrations:migrate`. Des insertions automatique de 5 tricks seront déjà présentes grâce aux fixtures afin d'avoir une base sur le site.
-
 - => Veuillez aussi compléter la variable **_MAILER_DSN_** qui concerne l'envoi de mail pour la création de compte et réinitialisation de mot de passe
 
-### Dossier upload
+- Mettez également à jour la variable **_APP_ENV=prod_** afin de pouvoir tester les pages d'erreurs par exemple si la page n'existe pas.
 
-Veuillez créer un dossier **_/upload_** dans le dossier **_/public/images/_**. Celui-ci va vous permettre de stocker les images de vos tricks lors des ajouts et des modifications. Des tricks ont déjà ajouté automatiquement depuis les fixtures (**_App\DataFixtures\AppFixtures_**) mais vous rendre compte que les images physiques n'existent pas.
+Afin d'ajouter la base de données du projet dans votre SGBDR, veuillez simplement lancer les commandes dans le terminal de Symfony : `php bin/console make:migration` puis `php bin/console doctrine:migrations:migrate`.
+
+- Afin d'ajouter des insertions automatique de 10 tricks, lancez la commande : `php bin/console doctrine:fixtures:load` pour avoir une base sur le site.
 
 ## Guide d'utilisation
 

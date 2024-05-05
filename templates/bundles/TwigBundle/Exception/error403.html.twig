@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Accès interdit
+{% endblock %}
+
+{% block body %}
+    <section class="m-5 bg-danger text-white p-5">
+        <h1 class="fw-bold">Accès interdit</h1>
+
+        <p>Vous n'êtes pas autorisé à accéder à cette page |
+            <a class="text-white" href="{{ path('home') }}">Retour à l'accueil</a>.
+        </p>
+    </section>
+    <br><br><br><br><br>
+{% endblock %}

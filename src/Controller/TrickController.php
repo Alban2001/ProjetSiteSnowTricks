@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,7 +28,7 @@ class TrickController extends AbstractController
     }
 
     // Affichage du trick avec ses informations en détails
-    #[Route(path: "/display/{slug}?page={page}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
+    #[Route(path: "/display/{slug}/{page<\d+>?1}", name: "trick_display", requirements: ['page' => '\d+'], methods: ["GET", "POST"])]
     /**
      * Création d'un trick
      *
@@ -71,6 +72,7 @@ class TrickController extends AbstractController
     }
 
     #[Route(path: "/create", name: "trick_create", methods: ["GET", "POST"])]
+    #[IsGranted('ROLE_USER', statusCode: 403)]
     /**
      * Création d'un trick
      *
@@ -80,8 +82,6 @@ class TrickController extends AbstractController
      */
     public function create(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         $trick = new Trick();
         $number = 3;
         for ($i = 0; $i < $number; $i++) {
@@ -107,6 +107,7 @@ class TrickController extends AbstractController
     }
 
     #[Route(path: "/update/{slug}", name: "trick_update", methods: ["GET", "POST"])]
+    #[IsGranted('ROLE_USER', statusCode: 403)]
     /**
      * Mise à jour du trick
      *
@@ -117,8 +118,6 @@ class TrickController extends AbstractController
      */
     public function update(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         $form = $this->createForm(TrickType::class, $trick, ['update' => true, 'submitLabel' => 'Mettre à jour']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -139,6 +138,7 @@ class TrickController extends AbstractController
     }
 
     #[Route(path: "/delete/{slug}", name: "trick_delete", methods: ["GET"])]
+    #[IsGranted('ROLE_USER', statusCode: 403)]
     /**
      * Suppression du trick
      *
@@ -148,7 +148,6 @@ class TrickController extends AbstractController
      */
     public function delete(#[MapEntity(expr: 'repository.findOneBySlug(slug)')] Trick $trick): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
         // Suppresion d'un trick
         $this->trickService->delete($trick);
 

@@ -13,19 +13,26 @@ class HomeController extends AbstractController
     {
     }
 
-    #[Route(path: "/", name: "home", methods: ["GET"])]
+    #[Route(path: "/{page<\d+>?1}", name: "home", methods: ["GET"])]
     /**
      * Page d'accueil : affichage de l'ensemble des tricks
      *
      * @return Response
      */
-    public function index(): Response
+    public function index($page): Response
     {
+        // Nombre de tricks par page
+        $number = 10;
+
         // Selection et affichage de tous les tricks
-        $tricks = $this->trickService->findAll();
+        $tricks = $this->trickService->findAll($page, $number);
+        $nbrTricks = $this->trickService->countTricks();
 
         return $this->render("home.html.twig", [
-            'tricks' => $tricks
+            'tricks' => $tricks,
+            'page' => $page,
+            'number' => $number,
+            'nbrTricks' => $nbrTricks
         ]);
     }
 

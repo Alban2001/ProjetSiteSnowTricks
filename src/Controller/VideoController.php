@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route("/video")]
 class VideoController extends AbstractController
@@ -17,6 +18,7 @@ class VideoController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete_video', requirements: ['id' => '\d+'], methods: ["GET", "POST"])]
+    #[IsGranted('ROLE_USER', statusCode: 403)]
     /**
      * Suppresion d'une vidéo pour la mise à jour d'un trick
      *
@@ -26,8 +28,6 @@ class VideoController extends AbstractController
      */
     public function delete(#[MapEntity(expr: 'repository.find(id)')] Video $video): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         // Suppression d'une vidéo
         $this->videoService->delete($video);
 

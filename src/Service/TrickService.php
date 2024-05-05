@@ -18,9 +18,9 @@ class TrickService implements TrickServiceInterface
     }
 
     // Sélection et affichage de l'ensemble des tricks
-    public function findAll()
+    public function findAll(int $page, int $number)
     {
-        $tricks = $this->entityManager->getRepository(Trick::class)->findAll();
+        $tricks = $this->entityManager->getRepository(Trick::class)->findAll($page, $number);
 
         // Récupération de l'image principale du trick
         foreach ($tricks as $trick) {
@@ -28,6 +28,12 @@ class TrickService implements TrickServiceInterface
         }
 
         return $tricks;
+    }
+
+    // Sélection et affichage de l'ensemble des tricks
+    public function countTricks(): int
+    {
+        return $this->entityManager->getRepository(Trick::class)->countTricks();
     }
 
     // Récupération du trick en fonction de son slug avec toutes ses informations
@@ -140,7 +146,7 @@ class TrickService implements TrickServiceInterface
 
         if ($illustrations !== null) {
             // Mise à jour des photos
-            for ($i = 0; $i <= count($illustrations) - 1; $i++) {
+            for ($i = 0; $i < count($illustrations) - 1; $i++) {
                 // Si les objets illustration sont remplis
                 if ($illustrations[$i]["nom"] !== null) {
                     $imagePhysique = TrickService::generateImage($illustrations[$i]["nom"]);

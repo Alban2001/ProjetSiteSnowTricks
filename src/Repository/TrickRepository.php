@@ -23,13 +23,19 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // Affichage de tous les tricks
-    public function findAll(): array
+    public function findAll(int $page = 1, int $number = 10): array
     {
+        $firstResult = 0;   // Premier résultat
+        $totalResults = $number * $page;    // Dernier résultat pour la page concernée
+
         return $this->createQueryBuilder('t')
             ->select('t, i, u')
             ->join('t.illustrations', 'i')
             ->leftJoin('t.utilisateur', 'u')
+            ->andWhere('i.principale = 1')
             ->orderBy('t.id', 'ASC')
+            ->setFirstResult($firstResult)
+            ->setMaxResults($totalResults)
             ->getQuery()
             ->getResult()
         ;
@@ -48,6 +54,16 @@ class TrickRepository extends ServiceEntityRepository
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getOneOrNullResult()
+        ;
+    }
+
+    // Affichage du nombre de tricks au total
+    public function countTricks(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 

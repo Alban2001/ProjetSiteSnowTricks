@@ -90,6 +90,12 @@
                 <i class="fa-solid fa-plus"></i>
             </a>
         {% endif %}
+
+        {% if number * page < nbrTricks %}
+            <p>
+                <a href="{{ path('home', {page: page + 1}) }}" class="btn btn-secondary">Voir plus</a>
+            </p>
+        {% endif %}
     </div>
     <script src="/scripts/home_page.js"></script>
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route("/illustration")]
 class IllustrationController extends AbstractController
@@ -17,6 +18,7 @@ class IllustrationController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete_illustration', requirements: ['id' => '\d+'], methods: ["GET", "POST"])]
+    #[IsGranted('ROLE_USER', statusCode: 403)]
     /**
      * Suppresion d'une illustration pour la mise à jour d'un trick
      *
@@ -26,8 +28,6 @@ class IllustrationController extends AbstractController
      */
     public function delete(#[MapEntity(expr: 'repository.find(id)')] Illustration $illustration): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         // Suppression de l'illustration
         $this->illustrationService->delete($illustration);
 
