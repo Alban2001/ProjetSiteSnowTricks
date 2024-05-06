@@ -33,7 +33,7 @@ class TrickRepository extends ServiceEntityRepository
             ->join('t.illustrations', 'i')
             ->leftJoin('t.utilisateur', 'u')
             ->andWhere('i.principale = 1')
-            ->orderBy('t.id', 'ASC')
+            ->orderBy('t.id', 'DESC')
             ->setFirstResult($firstResult)
             ->setMaxResults($totalResults)
             ->getQuery()

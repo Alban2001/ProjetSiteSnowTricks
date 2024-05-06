@@ -96,12 +96,11 @@
             <div class="form-control mb-3 d-flex flex-column">
                 {{ form_label(form.nom) }}
                 {{ form_widget(form.nom, {'value': trick.nom}) }}
+                {{ form_widget(form.slug) }}
                 <div class="form-error bg-danger text-white mt-2">
                     {{ form_errors(form.nom) }}
                     {{ form_errors(form.slug) }}
                 </div>
-                {{ form_widget(form.slug) }}
-                {{ form_widget(form._token) }}
             </div>
             <div class="form-control mb-3 d-flex flex-column">
                 {{ form_label(form.description) }}
@@ -123,6 +122,7 @@
                 <a href="{{ path('trick_delete', {slug: trick.slug}) }}" class="btn btn-primary">Supprimer</a>
             </div>
         </div>
+        {{ form_widget(form._token) }}
         {{form_end(form, {'render_rest': false})}}
     </div>
     <script src="/scripts/update.js"></script>

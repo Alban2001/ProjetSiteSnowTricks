@@ -138,6 +138,7 @@ class TrickService implements TrickServiceInterface
     {
         // Mise à jour dans la BDD
         $trick->setDateDerniereMAJ(new \DateTime('now'));
+        $trick->setSlug(str_replace(" ", "-", strtolower($trick->getNom())));
         $trick->setGroupe($trick->getGroupe());
         $trick->setUtilisateur($user);
 

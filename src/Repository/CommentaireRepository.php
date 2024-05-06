@@ -32,6 +32,7 @@ class CommentaireRepository extends ServiceEntityRepository
             ->join('c.trick', 't')
             ->leftJoin('c.utilisateur', 'u')
             ->andWhere('t.slug = :slug')
+            ->orderBy('c.id', 'DESC')
             ->setParameter('slug', $slug)
             ->setFirstResult($firstResult)
             ->setMaxResults($totalResults)
