@@ -58,7 +58,7 @@ class TrickController extends AbstractController
         }
 
         // Nombre de commentaires par page
-        $number = 5;
+        $number = 10;
         $trick->setIllustrationPrincipale();
 
         return $this->render("trick/display.html.twig", [

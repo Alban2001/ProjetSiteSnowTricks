@@ -22,7 +22,7 @@ class CommentaireRepository extends ServiceEntityRepository
     }
 
     // Affichage de tous les commentaires pour un trick (5 commentaires par trick)
-    public function displayAllCommentsBySlug(string $slug, int $page = 1, int $number = 5): array
+    public function displayAllCommentsBySlug(string $slug, int $page = 1, int $number = 10): array
     {
         $firstResult = 0;   // Premier résultat
         $totalResults = $number * $page;    // Dernier résultat pour la page concernée
@@ -32,6 +32,7 @@ class CommentaireRepository extends ServiceEntityRepository
             ->join('c.trick', 't')
             ->leftJoin('c.utilisateur', 'u')
             ->andWhere('t.slug = :slug')
+            ->orderBy('c.id', 'DESC')
             ->setParameter('slug', $slug)
             ->setFirstResult($firstResult)
             ->setMaxResults($totalResults)
